@@ -52,10 +52,19 @@ class SmartCameraTrainingController:
                     faces, _ = self.face_training.detect_face(frame)
                     for face in faces:
                         cv2.imwrite(os.path.join(self.specific_data_path, str(count) + IMAGE_TAIL), face)
+                        sc_share_memory.collecting_status = count
+                        if count == 100:
+                            sc_share_memory.start_collecting = False
+                            sc_share_memory.target_name_entered = False
                         count += 1
+
             else:
-                self.id_directory = uuid.uuid1().hex
-                self.specific_data_path = os.path.join(self.abs_path, DIRECTORY_DATASET, self.id_directory)
+                if sc_share_memory.target_name_entered:
+                    self.id_directory = sc_share_memory.target_name
+                    self.specific_data_path = os.path.join(self.abs_path, DIRECTORY_DATASET, self.id_directory)
+                else:
+                    self.id_directory = uuid.uuid1().hex
+                    self.specific_data_path = os.path.join(self.abs_path, DIRECTORY_DATASET, self.id_directory)
 
             time.sleep(0.05)
 

@@ -54,6 +54,7 @@ start_training = False
 target_name_entered = False
 target_name = None
 training_status =  0
+collecting_status =  0
 
 print("Done init parameters ... ")
 
