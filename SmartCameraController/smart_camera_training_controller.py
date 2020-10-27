@@ -41,12 +41,10 @@ class SmartCameraTrainingController:
     def threading_collect_data(self):
         count = 0
         while self.running:
-
-            if not os.path.isdir(self.specific_data_path):
-                os.makedirs(self.specific_data_path)
-
             if sc_share_memory.start_collecting:
                 if sc_share_memory.frame_face["frame"] is not None:
+                    if not os.path.isdir(self.specific_data_path):
+                        os.makedirs(self.specific_data_path)
                     count += 1
                     frame = sc_share_memory.frame_face["frame"]
                     faces, _ = self.face_training.detect_face(frame)

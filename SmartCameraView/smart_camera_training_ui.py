@@ -47,7 +47,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType(os.path.join(os.path.dirname(
 
         self.camera = OwnImageWidget(self.camera)
 
-
         self.face_image = self.label_5
         self.face_image.setScaledContents(True)
 
@@ -83,9 +82,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType(os.path.join(os.path.dirname(
     def progress_bar_update(self):
         self.progressBar.setValue(sc_share_memory.training_status)
 
-
     def face_update_frame(self):
-
         if sc_share_memory.frame_face["frame"] is not None:
             frame = sc_share_memory.frame_face["frame"]
             frame = cv2.resize(frame, (591, 441))

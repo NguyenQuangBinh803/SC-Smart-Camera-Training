@@ -19,6 +19,5 @@ if __name__ == "__main__":
     threading.Thread(target=smart_camera_training_controller.threading_streaming, args=[-1, ]).start()
     threading.Thread(target=smart_camera_training_controller.threading_collect_data).start()
 
-
     main_window = Window()
     sys.exit(app.exec_())
