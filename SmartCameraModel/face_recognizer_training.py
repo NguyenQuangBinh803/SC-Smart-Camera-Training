@@ -99,6 +99,7 @@ class FaceRecognizerTraining:
                 
                 try:
                     face = frame[startY:endY, startX:endX]
+
                     faces.append(face)
                     print(len(faces))
                     face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)

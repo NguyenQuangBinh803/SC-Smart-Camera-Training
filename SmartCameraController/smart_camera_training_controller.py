@@ -57,12 +57,14 @@ class SmartCameraTrainingController:
                     
                     print("Start collecting", len(faces))
                     for face in faces:
+                        sc_share_memory.global_face_image = face
                         cv2.imwrite(os.path.join(self.specific_data_path, str(count) + IMAGE_TAIL), face)
                         sc_share_memory.collecting_status = count
                         print(sc_share_memory.collecting_status )
-                        if count == 100:
+                        if count == 101:
                             sc_share_memory.start_collecting = False
                             sc_share_memory.target_name_entered = False
+                            sc_share_memory.collecting_status = 0
                             
                         count += 1
 
