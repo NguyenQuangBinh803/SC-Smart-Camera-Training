@@ -81,7 +81,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType(os.path.join(os.path.dirname(
         sc_share_memory.target_name_entered = True
 
     def progress_bar_update(self):
-        self.progressBar.setValue(sc_share_memory.training_status)
+        self.progressBar.setValue(sc_share_memory.collecting_status)
 
 
     def face_update_frame(self):

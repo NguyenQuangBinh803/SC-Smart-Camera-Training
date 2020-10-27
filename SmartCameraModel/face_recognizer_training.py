@@ -24,7 +24,7 @@ class FaceRecognizerTraining:
         self.embedder = cv2.dnn.readNetFromTorch(os.path.join(self.abs_path, DIRECTORY_EMBEDDING_MODEL, EMBEDDING_MODEL))
         self.face_detector_model = os.path.join(self.abs_path, DIRECTORY_FACE_DETECTOR, DETECTOR_MODEL)
         self.face_detector_weights = os.path.join(self.abs_path, DIRECTORY_FACE_DETECTOR, DETECTOR_WEIGHTS)
-
+        print(self.face_detector_weights)
         self.faceNet = cv2.dnn.readNetFromCaffe(self.face_detector_model, self.face_detector_weights)
 
 
@@ -82,7 +82,9 @@ class FaceRecognizerTraining:
         (h, w) = frame.shape[:2]
         blob = cv2.dnn.blobFromImage(frame, 1.0, (224, 224), (104.0, 177.0, 123.0))
         self.faceNet.setInput(blob)
+        
         detections = self.faceNet.forward()
+        print(detections)
         faces = []
         locs = []
         preds = []
@@ -92,19 +94,18 @@ class FaceRecognizerTraining:
             if confidence > 0.5:
                 box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                 (startX, startY, endX, endY) = box.astype("int")
-                (startX, startY) = (max(0, startX), max(0, startY))
-                (endX, endY) = (min(w - 1, endX), min(h - 1, endY))
+                #(startX, startY) = (max(0, startX), max(0, startY))
+                #(endX, endY) = (min(w - 1, endX), min(h - 1, endY))
+                
                 try:
                     face = frame[startY:endY, startX:endX]
                     faces.append(face)
+                    print(len(faces))
                     face = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
 
                 except Exception as exp:
-                    print(str(exp))
-        if rgb_require:
-            return locs, rgb_faces
-        else:
-            return locs, faces
+                    print(str(exp))        
+        return locs, faces
 
     # def recognize_with_openface(self, face):
     #     recognizer = pickle.loads(open(os.path.join(self.abs_path, DIRECTORY_EMBEDDING_DATA, EMBEDDING_RECOGNIZER),

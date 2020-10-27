@@ -22,6 +22,7 @@ class SmartCameraTrainingController:
     def __init__(self):
         self.running = True
         self.id_directory = uuid.uuid1().hex
+        
         self.thermal_analysis = ThermalAnalysis()
         self.face_detect_recognize = FaceDetectAndRecognition()
         self.face_training = FaceRecognizerTraining()
@@ -42,29 +43,37 @@ class SmartCameraTrainingController:
         count = 0
         while self.running:
 
-            if not os.path.isdir(self.specific_data_path):
-                os.makedirs(self.specific_data_path)
+            
 
             if sc_share_memory.start_collecting:
+                
+                if not os.path.isdir(self.specific_data_path):
+                    os.makedirs(self.specific_data_path)
+                
                 if sc_share_memory.frame_face["frame"] is not None:
                     count += 1
                     frame = sc_share_memory.frame_face["frame"]
-                    faces, _ = self.face_training.detect_face(frame)
+                    
+                    locs, faces = self.face_training.detect_face(frame)
+                    
+                    print("Start collecting", len(faces))
                     for face in faces:
                         cv2.imwrite(os.path.join(self.specific_data_path, str(count) + IMAGE_TAIL), face)
                         sc_share_memory.collecting_status = count
+                        print(sc_share_memory.collecting_status )
                         if count == 100:
                             sc_share_memory.start_collecting = False
                             sc_share_memory.target_name_entered = False
+                            
                         count += 1
 
             else:
                 if sc_share_memory.target_name_entered:
                     self.id_directory = sc_share_memory.target_name
-                    self.specific_data_path = os.path.join(self.abs_path, DIRECTORY_DATASET, self.id_directory)
+                    self.specific_data_path = os.path.join(self.abs_path, DIRECTORY_DATASET, self.id_directory + os.sep)
                 else:
                     self.id_directory = uuid.uuid1().hex
-                    self.specific_data_path = os.path.join(self.abs_path, DIRECTORY_DATASET, self.id_directory)
+                    self.specific_data_path = os.path.join(self.abs_path, DIRECTORY_DATASET, self.id_directory + os.sep)
 
             time.sleep(0.05)
 
