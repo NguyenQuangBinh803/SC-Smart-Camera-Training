@@ -73,7 +73,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType(os.path.join(os.path.dirname(
         sc_share_memory.start_collecting = True
 
     def activate_training(self):
-        sc_share_memory.start_collecting = True
+        sc_share_memory.start_training = True
 
     def activate_enter_name(self):
         sc_share_memory.target_name = self.textEdit.toPlainText()

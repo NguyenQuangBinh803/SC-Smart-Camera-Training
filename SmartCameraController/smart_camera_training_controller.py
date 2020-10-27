@@ -79,6 +79,20 @@ class SmartCameraTrainingController:
             time.sleep(0.05)
 
 
+    def threading_training_svm_model(self):
+        while self.running:
+            if sc_share_memory.start_training:
+                self.face_training.encoding_with_torch_openface("dataset")
+                sc_share_memory.training_status = 50
+                self.face_training.training_svm_model_openface()
+                sc_share_memory.training_status = 100
+                sc_share_memory.start_training = False
+            else:
+                sc_share_memory.training_status = 0
+
+            time.sleep(0.05)
+
+
 if __name__ == "__main__":
     smart_camera_controller = SmartCameraTrainingController()
     threading.Thread(target=smart_camera_controller.threading_streaming, args=[-1, ]).start()
