@@ -89,7 +89,6 @@ class SmartCameraTrainingController:
                 sc_share_memory.start_training = False
             else:
                 sc_share_memory.training_status = 0
-
             time.sleep(0.05)
 
 

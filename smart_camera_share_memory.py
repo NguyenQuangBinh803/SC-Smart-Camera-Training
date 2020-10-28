@@ -29,8 +29,6 @@ target_name = None
 training_status =  0
 collecting_status =  0
 
-
-
 print("Done init parameters ... ")
 
 
