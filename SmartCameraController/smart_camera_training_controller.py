@@ -65,7 +65,6 @@ class SmartCameraTrainingController:
                             sc_share_memory.start_collecting = False
                             sc_share_memory.target_name_entered = False
                             sc_share_memory.collecting_status = 0
-                            
                         count += 1
 
             else:

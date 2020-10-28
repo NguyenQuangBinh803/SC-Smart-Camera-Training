@@ -81,7 +81,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType(os.path.join(os.path.dirname(
 
     def progress_bar_update(self):
         self.progressBar.setValue(sc_share_memory.collecting_status)
-
+        self.progressBar_2.setValue(sc_share_memory.training_status)
         height, width, channel = sc_share_memory.global_face_image.shape
         bytesPerLine = 3 * width
         qImg = QtGui.QImage(sc_share_memory.global_face_image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB32)
